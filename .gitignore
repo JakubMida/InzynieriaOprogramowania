@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+
+release.properties
+pom.xml.releaseBackup
+pom.xml.tagConfFileBackup
+pom.xml.nextSnapshot
+pom.xml.war
+
+**/target
+**/*.iml
+**/.idea
+
+*.log
