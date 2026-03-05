@@ -1,6 +1,7 @@
 package vod.repository.mem;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import vod.repository.AuthorDao;
 import vod.model.Author;
 
