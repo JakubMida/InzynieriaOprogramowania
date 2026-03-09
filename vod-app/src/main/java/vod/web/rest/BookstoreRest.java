@@ -1,9 +1,14 @@
 package vod.web.rest;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vod.model.Book;
 import vod.model.Bookstore;
@@ -12,6 +17,7 @@ import vod.service.BookstoreService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +26,8 @@ import java.util.List;
 public class BookstoreRest {
     private final BookstoreService bookstoreService;
     private final BookService bookService;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
     @GetMapping("/bookstores")
     List<Bookstore> getBookstores(
@@ -69,8 +77,17 @@ public class BookstoreRest {
     }
 
     @PostMapping("/bookstores")
-    public ResponseEntity<Bookstore> addBookstore(@RequestBody Bookstore bookstore) {
+    public ResponseEntity<?> addBookstore(@Validated @RequestBody Bookstore bookstore, Errors errors, HttpServletRequest request) {
         log.info("about to add bookstore {}", bookstore);
+
+        if(errors.hasErrors()){
+            Locale locale = localeResolver.resolveLocale(request);
+
+            String errorMessage = errors.getAllErrors().stream()
+                    .map(oe->messageSource.getMessage(oe.toString(), new Object[0], locale))
+                    .reduce("errors:\n",(accu, oe) -> accu + oe+ "\n");
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
 
         bookstore = bookstoreService.addBookstore(bookstore);
         log.info("new bookstore added {}", bookstore);

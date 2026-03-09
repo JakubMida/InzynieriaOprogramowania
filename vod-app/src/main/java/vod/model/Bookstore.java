@@ -1,6 +1,9 @@
 package vod.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.Size;
+import net.bytebuddy.implementation.bytecode.StackManipulation;
+import org.wildfly.common.annotation.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,9 @@ import java.util.List;
 public class Bookstore {
 
     private int id;
+
+    @NotNull
+    @Size(min = 2, max=20)
     private String name;
     private String logo; //url logo w przypadku UI będzie zaciągany dynamicznie
     @JsonIgnore
