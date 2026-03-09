@@ -13,4 +13,5 @@ public interface BookstoreDao {
 
     List<Bookstore> findByBook(Book b);
 
+    Bookstore save(Bookstore bookstore);
 }

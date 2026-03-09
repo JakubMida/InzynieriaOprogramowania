@@ -1,0 +1,27 @@
+### GET all bookstores
+GET http://localhost:8080/webapi/bookstores
+
+### GET all bookstores with params
+GET http://localhost:8080/webapi/bookstores?phrase=abc
+custom-header: custom-value
+Cookie: some-cookie=some-value
+
+### get all bookstores by id
+
+GET http://localhost:8080/webapi/bookstores/1
+Accept: application/xml
+
+### get bookstore with books
+
+GET http://localhost:8080/webapi/bookstores/1/bookstores
+Accept: application/json
+
+### create new bookstore
+
+POST http://localhost:8080/webapi/bookstores
+Content-Type: application/json
+
+{
+    "name": "Ksiegarnia-Wdowson",
+    "logo": "http://www.logo.pl/img/logo.png"
+}

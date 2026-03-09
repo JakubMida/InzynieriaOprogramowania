@@ -15,4 +15,5 @@ public interface BookstoreService {
 
     List<Book> getBooksInBookstores(Bookstore b);
 
+    Bookstore addBookstore(Bookstore b);
 }

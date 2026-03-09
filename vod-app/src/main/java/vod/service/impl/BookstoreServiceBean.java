@@ -2,6 +2,7 @@ package vod.service.impl;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import vod.model.Bookstore;
 import vod.model.Book;
 import vod.repository.BookstoreDao;
@@ -11,7 +12,7 @@ import vod.service.BookstoreService;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Component
+@Service
 @Scope("prototype")
 public class BookstoreServiceBean implements BookstoreService {
 
@@ -50,4 +51,9 @@ public class BookstoreServiceBean implements BookstoreService {
         return bookstoreDao.findByBook(b);
     }
 
+    @Override
+    public Bookstore addBookstore(Bookstore b) {
+        log.info("adding bookstore " + b);
+        return bookstoreDao.save(b);
+    }
 }

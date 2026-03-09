@@ -9,7 +9,7 @@ import vod.model.Book;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Component("BookDao")
 public class MemBookDao implements BookDao {
     @Override
     public List<Book> findAll() {

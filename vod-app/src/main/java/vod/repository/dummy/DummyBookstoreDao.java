@@ -15,4 +15,7 @@ public class DummyBookstoreDao implements BookstoreDao {
     public Bookstore findById(int id){return null;}
     @Override
     public List<Bookstore> findByBook(Book b){return List.of();}
+
+    @Override
+    public Bookstore save(Bookstore b){return null;}
 }

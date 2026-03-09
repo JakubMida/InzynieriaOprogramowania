@@ -7,7 +7,7 @@ import vod.model.Author;
 
 import java.util.List;
 
-@Component
+@Component("AuthorDao")
 public class MemAuthorDao implements AuthorDao {
     @Override
     public List<Author> findAll() {
