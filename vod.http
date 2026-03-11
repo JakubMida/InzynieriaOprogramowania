@@ -20,8 +20,9 @@ Accept: application/json
 
 POST http://localhost:8080/webapi/bookstores
 Content-Type: application/json
+Accept-Language: pl
 
 {
-    "name": "Ksiegarnia-Wdowson",
+    "name": "",
     "logo": "http://www.logo.pl/img/logo.png"
 }

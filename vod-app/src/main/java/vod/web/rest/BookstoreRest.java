@@ -83,9 +83,13 @@ public class BookstoreRest {
         if(errors.hasErrors()){
             Locale locale = localeResolver.resolveLocale(request);
 
+//            String errorMessage = errors.getAllErrors().stream()
+//                    .map(oe->messageSource.getMessage(oe.getCode(), new Object[0], locale))
+//                    .reduce("errors:\n",(accu, oe) -> accu + oe + "\n");
+
             String errorMessage = errors.getAllErrors().stream()
-                    .map(oe->messageSource.getMessage(oe.toString(), new Object[0], locale))
-                    .reduce("errors:\n",(accu, oe) -> accu + oe+ "\n");
+                    .map(oe->messageSource.getMessage(oe,locale))
+                    .reduce("errors\n",(accu,oe) -> accu + oe + "\n");
             return ResponseEntity.badRequest().body(errorMessage);
         }
 
