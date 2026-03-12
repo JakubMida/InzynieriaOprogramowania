@@ -12,5 +12,9 @@ public class VodAdvice {
     private final BookstoreValidator validator;
 
     @InitBinder
-    void initBinder(WebDataBinder binder) {binder.addValidators(validator);}
+    void initBinder(WebDataBinder binder) {
+        if (binder.getTarget() != null && validator.supports(binder.getTarget().getClass())) {
+            binder.addValidators(validator);
+        }
+    }
 }

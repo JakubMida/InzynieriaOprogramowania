@@ -29,10 +29,6 @@ public class BookstoreRest {
     private final BookService bookService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
-    private final BookstoreValidator validator;
-
-    @InitBinder
-    void initBinder(WebDataBinder binder) {binder.setValidator(validator);}
 
     @GetMapping("/bookstores")
     List<Bookstore> getBookstores(
