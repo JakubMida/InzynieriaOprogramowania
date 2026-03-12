@@ -3,6 +3,7 @@ package vod.web.rest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,10 @@ public class BookstoreRest {
     private final BookService bookService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
+    private final BookstoreValidator validator;
+
+    @InitBinder
+    void initBinder(WebDataBinder binder) {binder.setValidator(validator);}
 
     @GetMapping("/bookstores")
     List<Bookstore> getBookstores(
@@ -88,7 +93,7 @@ public class BookstoreRest {
 //                    .reduce("errors:\n",(accu, oe) -> accu + oe + "\n");
 
             String errorMessage = errors.getAllErrors().stream()
-                    .map(oe->messageSource.getMessage(oe,locale))
+                    .map(oe->messageSource.getMessage(oe.getCode(),null,locale))
                     .reduce("errors\n",(accu,oe) -> accu + oe + "\n");
             return ResponseEntity.badRequest().body(errorMessage);
         }

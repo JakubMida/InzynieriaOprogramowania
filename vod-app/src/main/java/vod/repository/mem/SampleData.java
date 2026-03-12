@@ -90,7 +90,7 @@ class SampleData {
 
     private static void bind(Book m, Author d) {
         d.addBooks(m);
-        m.setDirector(d);
+        m.setAuthor(d);
     }
 
 }

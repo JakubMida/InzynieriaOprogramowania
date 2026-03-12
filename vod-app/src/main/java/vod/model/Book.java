@@ -42,7 +42,7 @@ public class Book {
         return author;
     }
 
-    public void setDirector(Author author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
