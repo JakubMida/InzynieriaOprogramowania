@@ -3,7 +3,6 @@ package vod.web.rest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import vod.model.Bookstore;
 import vod.service.BookService;
 import vod.service.BookstoreService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +37,11 @@ public class BookstoreRest {
         log.info("phrase param: {}", phrase);
         log.info("custom-header param: {}", customHeader);
         log.info("some-cookie param: {}", someCookie);
+
+        if(phrase!= null && phrase.equals("foo")){
+            throw new IllegalArgumentException("Foo!");
+        }
+
         List<Bookstore> bookstores = bookstoreService.getAllBookstores();
         log.info("{} bookstores found", bookstores.size());
         return bookstores;
@@ -83,10 +86,6 @@ public class BookstoreRest {
 
         if(errors.hasErrors()){
             Locale locale = localeResolver.resolveLocale(request);
-
-//            String errorMessage = errors.getAllErrors().stream()
-//                    .map(oe->messageSource.getMessage(oe.getCode(), new Object[0], locale))
-//                    .reduce("errors:\n",(accu, oe) -> accu + oe + "\n");
 
             String errorMessage = errors.getAllErrors().stream()
                     .map(oe->messageSource.getMessage(oe.getCode(),null,locale))

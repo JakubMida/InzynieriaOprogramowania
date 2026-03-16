@@ -2,7 +2,7 @@
 GET http://localhost:8080/webapi/bookstores
 
 ### GET all bookstores with params
-GET http://localhost:8080/webapi/bookstores?phrase=abc
+GET http://localhost:8080/webapi/bookstores?phrase=foo
 custom-header: custom-value
 Cookie: some-cookie=some-value
 
@@ -24,8 +24,12 @@ Accept-Language: pl
 
 {
     "name": "Kino Zaaak",
-    "logo": "http://www.logo.pl/img/logo.png"
+    "logo": "http://www.logo.pl/img/logo.png",
+    "rating" : 4.5,
+    "authorId" : 7
 }
+
+
 
 ### get all books
 GET http://localhost:8080/webapi/books

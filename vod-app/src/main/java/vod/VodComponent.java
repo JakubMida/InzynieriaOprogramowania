@@ -1,9 +1,10 @@
-package vod.service;
+package vod;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vod.model.Bookstore;
+import vod.service.BookstoreService;
 
 import java.util.List;
 

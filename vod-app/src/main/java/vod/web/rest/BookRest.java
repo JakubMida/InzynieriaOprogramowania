@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,7 +13,7 @@ import vod.model.Book;
 import vod.model.Bookstore;
 import vod.service.BookService;
 import vod.service.BookstoreService;
-import vod.web.rest.dto.BookDTO;
+import vod.web.dto.BookDTO;
 
 import java.util.List;
 
@@ -63,8 +62,11 @@ public class BookRest {
     }
 
     @PostMapping("/books")
-    ResponseEntity<?>addBook(@RequestBody BookDTO bookDTO){
-        log.info("about to add new book {}", bookDTO);
+    ResponseEntity<?>addBook(@RequestBody BookDTO bookDTO, Errors errors){
+        log.info("about to add book {}", bookDTO);
+        if(errors.hasErrors()){
+            return ResponseEntity.badRequest().build();
+        }
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
         book.setRating(bookDTO.getRating());
