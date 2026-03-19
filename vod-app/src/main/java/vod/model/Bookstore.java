@@ -1,24 +1,33 @@
 package vod.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import net.bytebuddy.implementation.bytecode.StackManipulation;
 import org.wildfly.common.annotation.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "Bookstore")
 public class Bookstore {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
     @Size(min = 2, max=20)
     private String name;
+
+    @Column(name="logo")
     private String logo; //url logo w przypadku UI będzie zaciągany dynamicznie
+
+    @ManyToMany(mappedBy = "bookstores")
     @JsonIgnore
-    private List<Book> books = new ArrayList<>();//struktura kolekcyjna związaną z granymi filmami, uproszczone
-//relacja wiele do wiele
+    private List<Book> books = new ArrayList<>();
+
     public Bookstore(int id, String name, String logo) {//konsturktor
         this.id = id;
         this.name = name;

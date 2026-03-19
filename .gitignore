@@ -12,3 +12,7 @@ pom.xml.war
 **/.idea
 
 *.log
+
+# Dane bazy danych MySQL z wolumenu Dockera
+docker-vod/mysql/data/
+docker-vod/mysql/*.sock

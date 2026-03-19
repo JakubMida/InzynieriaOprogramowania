@@ -23,7 +23,7 @@ public class MemBookDao implements BookDao {
 
     @Override
     public List<Book> findByAuthor(Author a) {
-       return SampleData.books.stream().filter(m -> m.getDirector() == a).collect(Collectors.toList());
+       return SampleData.books.stream().filter(m -> m.getAuthor() == a).collect(Collectors.toList());
     }
 
     @Override

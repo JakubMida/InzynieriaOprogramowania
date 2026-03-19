@@ -1,16 +1,32 @@
 package vod.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
     private Author author;//relacja do rezysera - kolejny obiekt danych w uproszczeniu założenie że jeden film ma 1 reżysera
     private float rating;//rating
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_bookstore",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "bookstore_id", referencedColumnName = "id")
+    )
     private List<Bookstore> bookstores = new ArrayList<>();
-//relacja wiele do wiele - bidirectional
+
+    private String poster;
 
     public Book(int id, String title, String poster, Author author, float rating) {
         this.id = id;
@@ -20,6 +36,14 @@ public class Book {
     }
 
     public Book() {
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
     public int getId() {
@@ -38,7 +62,7 @@ public class Book {
         this.title = title;
     }
 
-    public Author getDirector() {
+    public Author getAuthor() {
         return author;
     }
 

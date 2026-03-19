@@ -7,7 +7,7 @@ import vod.repository.BookstoreDao;
 
 import java.util.List;
 
-@Component
+
 public class DummyBookstoreDao implements BookstoreDao {
     @Override
     public List<Bookstore> findAll() {return List.of();}

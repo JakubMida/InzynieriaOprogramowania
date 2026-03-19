@@ -19,7 +19,7 @@
         <tr>
             <th>Logo</th>
             <th>Name</th>
-            <th>Movies</th>
+            <th>Books</th>
         </tr>
         <tr th:each="c : ${bookstores}">
             <td>
@@ -27,7 +27,7 @@
             </td>
             <td th:text="${c.name}"></td>
             <td class="search-container">
-                <a class="search" th:href="@{/movies?cinemaId={id}(id=${c.id})}"></a>
+                <a class="search" th:href="@{/books?bookstoreId={id}(id=${c.id})}"></a>
             </td>
         </tr>
     </table>

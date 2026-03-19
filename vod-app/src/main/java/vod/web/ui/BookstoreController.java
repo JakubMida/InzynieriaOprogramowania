@@ -30,11 +30,11 @@ public class BookstoreController {
             Book book = bookService.getBookById(bookId);
             List<Bookstore> bookstores = bookstoreService.getBookstoresByBook(book);
             model.addAttribute("bookstores", bookstores);
-            model.addAttribute("tittle", "Bookstores with books " + book.getTitle() +  " " );
+            model.addAttribute("title", "Bookstores with books " + book.getTitle() +  " " );
         }else{
             List<Bookstore> bookstores = bookstoreService.getAllBookstores();
             model.addAttribute("bookstores", bookstores);
-            model.addAttribute("tittle", "Bookstores " );
+            model.addAttribute("title", "Bookstores " );
         }
 
         return "bookstoresView";

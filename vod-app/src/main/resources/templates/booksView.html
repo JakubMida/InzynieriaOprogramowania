@@ -19,22 +19,22 @@
         <tr>
             <th>Poster</th>
             <th>Title</th>
-            <th>Director</th>
+            <th>Author</th>
             <th>Rating</th>
-            <th>Cinemas</th>
+            <th>Bookstores</th>
         </tr>
-        <tr th:each="m : ${movies}">
+        <tr th:each="m : ${books}">
             <td>
                 <img th:src="${m.poster}"/>
             </td>
             <td th:text="${m.title}"></td>
             <td>
-                <a th:href="@{/movies?directorId={id}(id=${m.director.id})}"
-                   th:text="${m.director.firstName} + ' ' + ${m.director.lastName}"></a>
+                <a th:href="@{/books?authorId={id}(id=${m.author.id})}"
+                   th:text="${m.author.firstName} + ' ' + ${m.author.lastName}"></a>
             </td>
             <td class="rating" th:text="${m.rating}"></td>
             <td class="search-container">
-                <a class="search" th:href="@{/cinemas?movieId={id}(id=${m.id})}"></a>
+                <a class="search" th:href="@{/bookstores?bookId={id}(id=${m.id})}"></a>
             </td>
         </tr>
     </table>

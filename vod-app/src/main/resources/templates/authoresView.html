@@ -20,10 +20,10 @@
             <th>First name</th>
             <th>Last name</th>
         </tr>
-        <tr th:each="d : ${directors}">
+        <tr th:each="d : ${authors}">
             <td th:text="${d.firstName}"></td>
             <td>
-                <a th:href="@{/movies?directorId={id}(id=${d.id})}"
+                <a th:href="@{/books?authorId={id}(id=${d.id})}"
                    th:text="${d.lastName}"></a>
             </td>
         </tr>

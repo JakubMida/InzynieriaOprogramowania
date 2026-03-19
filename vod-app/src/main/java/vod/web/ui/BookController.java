@@ -33,17 +33,17 @@ public class BookController {
             Bookstore bookstore = bookstoreService.getBookstoresById(bookstoreId);
             List<Book> books = bookstoreService.getBooksInBookstores(bookstore);
             model.addAttribute("books", books);
-            model.addAttribute("tittle", "Books in bookstores " + bookstore.getName() + " ");
+            model.addAttribute("title", "Books in bookstores " + bookstore.getName() + " ");
         }else if(authorId != null){
             Author author = bookService.getAuthorById(authorId);
             List<Book> books = bookService.getBooksByAuthor(author);
             model.addAttribute("books", books);
-            model.addAttribute("tittle", "Books written by " + author.getLastName()+  " ");
+            model.addAttribute("title", "Books written by " + author.getLastName()+  " ");
         }
         else{
             List<Book> books = bookService.getAllBooks();
             model.addAttribute("books", books);
-            model.addAttribute("tittle", "Books");
+            model.addAttribute("title", "Books");
         }
 
         return "booksView";

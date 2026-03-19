@@ -1,5 +1,6 @@
 package vod.service.impl;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vod.repository.BookstoreDao;
@@ -22,7 +23,7 @@ public class BookServiceBean implements BookService {
     private BookstoreDao bookstoreDao;
     private BookDao bookDao;
 
-    public BookServiceBean(AuthorDao authorDao, BookstoreDao bookstoreDao, BookDao bookDao) {
+    public BookServiceBean(AuthorDao authorDao, @Qualifier("jpaBookstoreDao") BookstoreDao bookstoreDao, BookDao bookDao) {
         this.authorDao = authorDao;
         this.bookstoreDao = bookstoreDao;
         this.bookDao = bookDao;
