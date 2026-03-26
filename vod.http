@@ -64,4 +64,8 @@ Accept-Language: pl
 "authorId": 4
 }
 
+### shutdown service
+
+POST http://localhost:8080/actuator/shutdown
+
 
