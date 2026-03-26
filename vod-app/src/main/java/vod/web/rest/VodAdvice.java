@@ -20,22 +20,32 @@ public class VodAdvice {
 
 //    @InitBinder
 //    void initBinder(WebDataBinder binder) {
-////        if (binder.getTarget() != null && validator.supports(binder.getTarget().getClass())) {
-////            binder.addValidators(validator);
-////        }
+
+    /// /        if (binder.getTarget() != null && validator.supports(binder.getTarget().getClass())) {
+    /// /            binder.addValidators(validator);
+    /// /        }
 //        binder.addValidators(validator);
 //    }
-
     @InitBinder("bookstore")
-    void initBinderForBookstore(WebDataBinder binder) {binder.addValidators(bookstoreValidator);}
+    void initBinderForBookstore(WebDataBinder binder) {
+        binder.addValidators(bookstoreValidator);
+    }
 
     @InitBinder("bookDTO")
-    void initBinderForBookDTO(WebDataBinder binder) {binder.addValidators(bookValidator);}
+    void initBinderForBookDTO(WebDataBinder binder) {
+        binder.addValidators(bookValidator);
+    }
 
 
     @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<String> handleIllegalAccessException(IllegalArgumentException e){
+    ResponseEntity<String> handleIllegalAccessException(IllegalArgumentException e) {
         log.error("illegal argument provided", e);
         return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    ResponseEntity<String> handleException(Exception e) {
+        log.error("generic exception", e);
+        return ResponseEntity.status(HttpStatus.LOOP_DETECTED).body(e.getMessage());
     }
 }

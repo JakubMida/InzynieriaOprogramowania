@@ -1,8 +1,15 @@
 package vod.service.impl;
 
+import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import vod.repository.BookstoreDao;
 import vod.repository.AuthorDao;
 import vod.repository.BookDao;
@@ -14,19 +21,27 @@ import vod.service.BookService;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Component
+@Service
 public class BookServiceBean implements BookService {
 
     private static final Logger log = Logger.getLogger(BookService.class.getName());
 
-    private AuthorDao authorDao;
-    private BookstoreDao bookstoreDao;
-    private BookDao bookDao;
+    private final AuthorDao authorDao;
+    @Qualifier("jpaBookstoreDao")
+    private final BookstoreDao bookstoreDao;
+    private final BookDao bookDao;
+    private final PlatformTransactionManager transactionManager;
 
-    public BookServiceBean(AuthorDao authorDao, @Qualifier("jpaBookstoreDao") BookstoreDao bookstoreDao, BookDao bookDao) {
+    public BookServiceBean(
+            AuthorDao authorDao,
+            @Qualifier("jpaBookstoreDao") BookstoreDao bookstoreDao,
+            BookDao bookDao,
+            PlatformTransactionManager transactionManager
+    ) {
         this.authorDao = authorDao;
         this.bookstoreDao = bookstoreDao;
         this.bookDao = bookDao;
+        this.transactionManager = transactionManager;
     }
 
     public List<Book> getAllBooks() {
@@ -74,10 +89,23 @@ public class BookServiceBean implements BookService {
         return authorDao.findById(id);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Book addBook(Book b) {
         log.info("about to add book " + b);
-        return bookDao.add(b);
+        TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try{
+            b = bookDao.add(b);
+            if(b.getTitle().equals("Apocalypse Now")){
+                throw new RuntimeException("not yet!");
+            }
+            transactionManager.commit(ts);
+        }catch (RuntimeException e){
+            transactionManager.rollback(ts);
+            throw e;
+        }
+
+        return b;
     }
 
     @Override

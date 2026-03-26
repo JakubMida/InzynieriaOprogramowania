@@ -26,7 +26,7 @@ Accept-Language: pl
     "name": "Kino Zaaak",
     "logo": "http://www.logo.pl/img/logo.png",
     "rating" : 4.5,
-    "authorId" : 7
+    "authorId" : 3
 }
 
 
@@ -45,13 +45,12 @@ GET localhost:8080/webapi/books
 Content-Type: application/json
 
 {
-"title" : "I00",
+"title" : "I0",
 "poster" : "https://www.kinoteka.pl/img/logo.png",
 "rating" : 4.5,
-"director": {
-"id": 4
+"authorId" : 3
 }
-}
+
 
 ### post
 

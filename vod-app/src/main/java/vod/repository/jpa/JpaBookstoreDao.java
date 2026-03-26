@@ -3,7 +3,6 @@ package vod.repository.jpa;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import vod.model.Book;
 import vod.model.Bookstore;
