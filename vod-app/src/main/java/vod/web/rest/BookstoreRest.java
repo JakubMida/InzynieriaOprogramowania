@@ -3,6 +3,8 @@ package vod.web.rest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -92,6 +94,10 @@ public class BookstoreRest {
                     .reduce("errors\n",(accu,oe) -> accu + oe + "\n");
             return ResponseEntity.badRequest().body(errorMessage);
         }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("authentication {}", authentication);
+        log.info("authentication name: {}", authentication.getName());
 
         bookstore = bookstoreService.addBookstore(bookstore);
         log.info("new bookstore added {}", bookstore);

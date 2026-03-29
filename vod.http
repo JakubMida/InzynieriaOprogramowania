@@ -21,6 +21,7 @@ Accept: application/json
 POST http://localhost:8080/webapi/bookstores
 Content-Type: application/json
 Accept-Language: pl
+Authorization: Basic dbuser1 dbuser1
 
 {
     "name": "Kino Zaaak",
@@ -57,11 +58,13 @@ Content-Type: application/json
 POST http://localhost:8080/webapi/books
 Content-Type: application/json
 Accept-Language: pl
+Authorization: Basic user1 user1
 
 {
-"title" : "I020S",
-"rating" : 4.5,
-"authorId": 4
+  "title": "I020S",
+  "rating": 4.5,
+  "authorId": 4,
+  "poster": "https://example.com/image.jpg"
 }
 
 ### shutdown service

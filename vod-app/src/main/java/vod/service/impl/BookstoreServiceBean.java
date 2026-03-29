@@ -2,6 +2,7 @@ package vod.service.impl;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vod.model.Bookstore;
@@ -52,6 +53,7 @@ public class BookstoreServiceBean implements BookstoreService {
         return bookstoreDao.findByBook(b);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Bookstore addBookstore(Bookstore b) {
         log.info("adding bookstore " + b);
