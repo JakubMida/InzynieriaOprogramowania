@@ -9,7 +9,14 @@ import lombok.Data;
 @Data
 public class BookDTO {
     private String title;
-    private String author;
-    private int authorId;
+    private String poster;
     private float rating;
+    private int authorId;
 }
+//@Data
+//public class BookDTO {
+//    private String title;
+//    private String author;
+//    private int authorId;
+//    private float rating;
+//}

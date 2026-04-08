@@ -24,12 +24,9 @@ Accept-Language: pl
 Authorization: Basic dbuser1 dbuser1
 
 {
-    "name": "Kino Zaaak",
-    "logo": "http://www.logo.pl/img/logo.png",
-    "rating" : 4.5,
-    "authorId" : 3
+  "name": "Kino Zaaasssskaaaa",
+  "logo": "http://www.logo.pl/img/logo.png"
 }
-
 
 
 ### get all books
@@ -61,10 +58,10 @@ Accept-Language: pl
 Authorization: Basic user1 user1
 
 {
-  "title": "I020S",
+  "title": "I02s0S",
+  "poster": "https://example.com/image.jpg",
   "rating": 4.5,
-  "authorId": 4,
-  "poster": "https://example.com/image.jpg"
+  "authorId": 2
 }
 
 ### shutdown service

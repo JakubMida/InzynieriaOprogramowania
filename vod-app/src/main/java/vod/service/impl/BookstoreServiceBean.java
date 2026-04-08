@@ -1,5 +1,6 @@
 package vod.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 
 @Service
 @Scope("prototype")
+@Transactional
 public class BookstoreServiceBean implements BookstoreService {
 
     private static final Logger log = Logger.getLogger(BookstoreService.class.getName());

@@ -10,10 +10,15 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
+
+import javax.sql.DataSource;
+
 
 @Configuration
 @EnableWebSecurity
@@ -21,39 +26,44 @@ import org.springframework.security.config.Customizer;
 public class VodSecurityConfig {
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    PasswordEncoder passwordEncoder() {return NoOpPasswordEncoder.getInstance();}
 
     @Bean
-    UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails user1 = User
-                .withUsername("user1")
-                .password(encoder.encode("user1"))
-                .roles("ADMIN")
-                .build();
+    UserDetailsService userDetailsService(DataSource dataSource) {
+//        UserDetails user1 = User
+//                .withUsername("user1")
+//                .password(encoder.encode("user1"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        UserDetails user2 = User
+//                .withUsername("user2")
+//                .password(encoder.encode("user2"))
+//                .roles("REGULAR")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user1, user2);
 
-        UserDetails user2 = User
-                .withUsername("user2")
-                .password(encoder.encode("user2"))
-                .roles("REGULAR")
-                .build();
-
-        return new InMemoryUserDetailsManager(user1, user2);
+        JdbcUserDetailsManager detailsManager = new JdbcUserDetailsManager();
+        detailsManager.setDataSource(dataSource);
+        detailsManager.setUsersByUsernameQuery("select username, password, 'true' from user where username=?");
+        detailsManager.setAuthoritiesByUsernameQuery("select username, role from role where username=?");
+        return detailsManager;
     }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
+        return http
+                .csrf().disable()
+                .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, "/webapi/books").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/webapi/bookstores").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/webapi/bookstores/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/webapi/bookstores/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic()
+                .and()
+                .build();
 
-        return http.build();
     }
 }

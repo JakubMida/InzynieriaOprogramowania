@@ -70,6 +70,7 @@ public class BookRest {
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
         book.setRating(bookDTO.getRating());
+        book.setPoster(bookDTO.getPoster());
         book.setAuthor(bookService.getAuthorById(bookDTO.getAuthorId()));
 
         book = bookService.addBook(book);
